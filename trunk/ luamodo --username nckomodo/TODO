@@ -1,6 +1,0 @@
-TODO
-====
-Implement more IRC events
-Have each connection keep a state (channels, users, etc)
-Add command line args
-Proper documentation
