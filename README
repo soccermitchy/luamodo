@@ -1,0 +1,23 @@
+Luamodo v1.0
+Alex Beard (nckomodo@gmail.com)
+
+OVERVIEW
+========
+Luamodo is an object oriented IRC bot framework capable of supporting multiples bot and connections, and provides features such as commands, hooks, timers, and extensions(Bots can choose whether or not to use an extension, and extensions can be reloaded on the fly)
+
+INSTALL
+=======
+Luamodo requires LuaSocket, Lua 5.1, and LuaFileSystem.
+
+NOTES
+=====
+There's two examples of extensions in the /Extensions/, Stats and Control
+There's a single example of a bot in /Bots/, TestBot
+Run main.lua to launch the program, all bots and extensions will be loaded automatically, so no need to use any dofiles
+Make sure to poke around in the extensions and bots examples to find anything you need to change
+
+COPYRIGHT AND LICENSE
+=====================
+Copyright (C) 2007 Alex Beard
+
+This code is distributed under the MIT license; a copy is in the LICENSE file distributed with the source.
