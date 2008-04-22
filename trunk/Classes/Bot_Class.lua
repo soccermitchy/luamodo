@@ -4,11 +4,22 @@ Bot_mt = {}
 Bot_mt.__index = Bot
 Bot_mt.__type = "Bot"
 TableTypes["Bot"] = true
+--- Creates and returns a new Bot object.
+-- Inserts the bot in the Bots table indexed by ID
+-- @param ID a string used for the bots index in various tables as well as it's display name for console output
+-- @param posnames a table of possible nicks for IRC connections to use
+-- @return the newly created bot
+-- @usage NewBot = Bot:New("Display Name",{"DefaultNick","AltNick1","AltNick2"})
 function Bot:New(ID,posnames)
 	local mt = setmetatable({Extensions = {}, Timers = {}, CmdList = {}, CTCPList = {}, HookList = {}, ID = ID, Connections = {}, Settings = {Names = posnames}},Bot_mt)
 	Bots[mt.ID] = mt
 	return mt
 end
+--- Loads an extension into a bot.
+-- Adds the extensions list of hooks, commands, and CTCP responses to the bot.
+-- Then it registers the bot with the extension
+-- @param extension the extension object to load
+-- @usage NewBot:LoadExtension(somextension)
 function Bot:LoadExtension(extension)
 	for k,v in pairs(extension.Hooks) do
 		self:AddHook(v.Event,v.Name,v.Func)
@@ -22,13 +33,27 @@ function Bot:LoadExtension(extension)
 	self.Extensions[extension.ID] = extension
 	extension:Setup(self)
 end
-	
+---  Performs the bots timers, then calls :Think() on each connection that belongs to the bot.
+-- <br>
+-- <i>Note</i>: You do not need to call this manually as the MainLoop function takes care of it.
+-- @see Bot:New
+-- @usage NewBot:Think()
 function Bot:Think()
 	self:DoTimers()
 	for k,v in pairs(self.Connections) do
 		v:Think()
 	end
 end
+--- Adds, modifies, removes, or gets info about a timer.
+-- @param name the name of the timer
+-- @param delay how long to wait before running the timer, specify "off" to remove the timer
+-- @param reps how many times to run the timer (pass 0 for a never-ending timer)
+-- @param func the function to run
+-- @param args a table of arguments to pass to the function
+-- @usage NewBot:Timer("test", 1, 1, print, {"a", "b"}) creates a timer that runs once after one second and prints the strings "a" and "b"
+-- @usage NewBot:Timer("test") gets information about the timer
+-- @usage NewBot:Timer("test",nil,0) sets the timer to run forever <i>Note</i>: pass nil/omit parameters that you dont want to change
+-- @usage NewBot:Timer("test", "off") removes the timer
 function Bot:Timer(name,delay,reps,func,args)
 	if (reps == 0) then
 		reps = -1
