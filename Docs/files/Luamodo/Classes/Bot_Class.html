@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../../../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../../../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+
+
+<!-- File list -->
+
+<h1>Files</h1>
+<ul>
+
+	<li>
+		<a href="../../../files/Luamodo/Bots/TestBot.html">Luamodo/Bots/TestBot.lua</a>
+	</li>
+
+	<li><strong>Luamodo/Classes/Bot_Class.lua</strong></li>
+	
+	<li>
+		<a href="../../../files/Luamodo/Classes/Connection_Class.html">Luamodo/Classes/Connection_Class.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/Classes/Extension_Class.html">Luamodo/Classes/Extension_Class.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/Extensions/Control.html">Luamodo/Extensions/Control.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/Extensions/Stats.html">Luamodo/Extensions/Stats.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/Utils/Bot_Utils.html">Luamodo/Utils/Bot_Utils.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/Utils/Misc_Utils.html">Luamodo/Utils/Misc_Utils.lua</a>
+	</li>
+
+	<li>
+		<a href="../../../files/Luamodo/main.html">Luamodo/main.lua</a>
+	</li>
+
+</ul>
+
+
+
+
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1>File <code>Luamodo/Classes/Bot_Class.lua</code></h1>
+
+
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:LoadExtension">Bot:LoadExtension</a>&nbsp;(extension)</td>
+	<td class="summary">Loads an extension into a bot.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:New">Bot:New</a>&nbsp;(ID, posnames)</td>
+	<td class="summary">Creates and returns a new Bot object.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:Think">Bot:Think</a>&nbsp;()</td>
+	<td class="summary">Performs the bots timers, then calls :Think() on each connection that belongs to the bot.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:Timer">Bot:Timer</a>&nbsp;(name, delay, reps, func, args)</td>
+	<td class="summary">Adds, modifies, removes, or gets info about a timer.</td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="Bot:LoadExtension"></a><strong>Bot:LoadExtension</strong>&nbsp;(extension)</dt>
+<dd>
+Loads an extension into a bot. Adds the extensions list of hooks, commands, and CTCP responses to the bot. Then it registers the bot with the extension
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  extension: the extension object to load
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+NewBot:LoadExtension(somextension)
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="Bot:New"></a><strong>Bot:New</strong>&nbsp;(ID, posnames)</dt>
+<dd>
+Creates and returns a new Bot object. Inserts the bot in the Bots table indexed by ID
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  ID: a string used for the bots index in various tables as well as it's display name for console output
+	</li>
+	
+	<li>
+	  posnames: a table of possible nicks for IRC connections to use
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+NewBot = Bot:New("Display Name",{"DefaultNick","AltNick1","AltNick2"})
+
+
+
+<h3>Return value:</h3>
+the newly created bot
+
+
+
+</dd>
+
+
+
+
+<dt><a name="Bot:Think"></a><strong>Bot:Think</strong>&nbsp;()</dt>
+<dd>
+Performs the bots timers, then calls :Think() on each connection that belongs to the bot. <br> <i>Note</i>: You do not need to call this manually as the MainLoop function takes care of it.
+
+
+
+
+
+<h3>Usage:</h3>
+NewBot:Think()
+
+
+
+
+
+<h3>See also:</h3>
+<ul>
+	
+	<li><a href="../../../files/Luamodo/Classes/Bot_Class.html#Bot:New">
+		Bot:New
+	</a>
+	
+</ul>
+
+</dd>
+
+
+
+
+<dt><a name="Bot:Timer"></a><strong>Bot:Timer</strong>&nbsp;(name, delay, reps, func, args)</dt>
+<dd>
+Adds, modifies, removes, or gets info about a timer.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  name: the name of the timer
+	</li>
+	
+	<li>
+	  delay: how long to wait before running the timer, specify "off" to remove the timer
+	</li>
+	
+	<li>
+	  reps: how many times to run the timer (pass 0 for a never-ending timer)
+	</li>
+	
+	<li>
+	  func: the function to run
+	</li>
+	
+	<li>
+	  args: a table of arguments to pass to the function
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage</h3>
+<ul>
+	
+	<li>NewBot:Timer("test", 1, 1, print, {"a", "b"}) creates a timer that runs once after one second and prints the strings "a" and "b"
+	
+	<li>NewBot:Timer("test") gets information about the timer
+	
+	<li>NewBot:Timer("test",nil,0) sets the timer to run forever <i>Note</i>: pass nil/omit parameters that you dont want to change
+	
+	<li>NewBot:Timer("test", "off") removes the timer
+	
+</ul>
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>
