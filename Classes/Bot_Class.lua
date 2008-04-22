@@ -54,6 +54,10 @@ end
 -- @usage NewBot:Timer("test") gets information about the timer
 -- @usage NewBot:Timer("test",nil,0) sets the timer to run forever <i>Note</i>: pass nil/omit parameters that you dont want to change
 -- @usage NewBot:Timer("test", "off") removes the timer
+-- @return False if the name parameter is invalid.<br>
+--  A table representing the timer if requested, or false if said timer doesnt exist.<br>
+--  The table for the newly created/modifed timer otherwise
+-- @return An error message if return value 1 is false
 function Bot:Timer(name,delay,reps,func,args)
 	if (reps == 0) then
 		reps = -1
