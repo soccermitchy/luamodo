@@ -36,7 +36,6 @@ end
 ---  Performs the bots timers, then calls :Think() on each connection that belongs to the bot.
 -- <br>
 -- <i>Note</i>: You do not need to call this manually as the MainLoop function takes care of it.
--- @see Bot:New
 -- @usage NewBot:Think()
 function Bot:Think()
 	self:DoTimers()
@@ -99,6 +98,9 @@ function Bot:Timer(name,delay,reps,func,args)
 		return self.Timers[name]
 	end
 end
+--- Loops through each timer checking whether or not they should be executed.
+-- <br>
+-- <i>Note:</i> You do not need to call this manually, it is take care of automatically
 function Bot:DoTimers()
 	local Timers = self.Timers
 	for k,v in pairs(Timers) do
@@ -123,6 +125,14 @@ function Bot:DoTimers()
         end
     end
 end
+--- Creates a connection to an IRC server.
+-- connection is stored in the Bot object under Connections, indexed as a tostring of the connection table
+-- @param Server the IRC server to connect to
+-- @param Port the port to use when connection
+-- @param Channels [optional] A table of channels to join upon successful connection <i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
+-- @param AuthCmd [optional] The string to send to the server to authenticate the bot (such as "ns identify somepassword")
+-- @usage NewConnection = NewBot:Connect("irc.testserver.org",6667,{{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}}, "ns identify somepassword")
+-- @return The newly created connection object
 function Bot:Connect(Server,Port,Channels,AuthCmd)
 	connection = Connection:New()
 	connection.Settings.AltNames = self.Settings.Names
@@ -135,12 +145,11 @@ function Bot:Connect(Server,Port,Channels,AuthCmd)
 	self.Connections[tostring(connection)] = connection
 	connection:Connect()
 end
-function Bot:ConnectionFailure(Connection)
-	print(self.ID ..": Unable to connect to ".. Connection.Server .." on port ".. Connection.Port)
-end
-function Bot:ConnectionSuccess(Connection)
-	print(self.ID ..": Successfully connected to ".. Connection.Server .." on port ".. Connection.Port)
-end
+--- Fires a list of hooks for the specified event.
+-- <br>
+-- <i>Note:</i> You do not need to call this manually, it is taken care of automatically
+-- @param event The event to fire hooks for
+-- @param argtable A table of arguments to pass to each function
 function Bot:DoHook(event,argtable)
 	if (self.HookList[event]) then
 		for k,v in pairs(self.HookList[event]) do
@@ -148,6 +157,13 @@ function Bot:DoHook(event,argtable)
 		end
 	end
 end
+--- Adds a hook for the specified event
+-- @param event The event to hook onto
+-- @param name The unique name to use for the hook to prevent collisions/allow overwrites
+-- @param func The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
+-- @usage NewBot:AddHook("PRIVMSG", "TestHook", function(Func, Args) OutputTable(Args) end)
+-- @see TableFunc
+-- @return A TableFunc of the function passed
 function Bot:AddHook(event,name,func)
 	ftype = type(func)
 	if (ftype == "function") then
@@ -160,6 +176,12 @@ function Bot:AddHook(event,name,func)
 		return func
 	end
 end
+--- Adds a command to the bot
+-- @param cmd The text to match to fire the command (case insensitive)
+-- @param func The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd
+-- @usage NewBot:AddCmd("!test", function(Func, Args) print("Test!") end)
+-- @see TableFunc
+-- @return A TableFunc of the function passed
 function Bot:AddCmd(cmd,func)
 	local cmd = string.upper(cmd)
 	ftype = type(func)
