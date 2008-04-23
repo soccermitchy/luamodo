@@ -95,6 +95,11 @@
 <table class="function_list">
 
 	<tr>
+	<td class="name" nowrap><a href="#Bot:AddCTCP">Bot:AddCTCP</a>&nbsp;(cmd, func)</td>
+	<td class="summary">Adds a CTCP response </td>
+	</tr>
+
+	<tr>
 	<td class="name" nowrap><a href="#Bot:AddCmd">Bot:AddCmd</a>&nbsp;(cmd, func)</td>
 	<td class="summary">Adds a command to the bot </td>
 	</tr>
@@ -107,6 +112,16 @@
 	<tr>
 	<td class="name" nowrap><a href="#Bot:Connect">Bot:Connect</a>&nbsp;(Server, Port, Channels, AuthCmd)</td>
 	<td class="summary">Creates a connection to an IRC server.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:DoCTCP">Bot:DoCTCP</a>&nbsp;(cmd, argtable)</td>
+	<td class="summary">Fires a CTCP event.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot:DoCmd">Bot:DoCmd</a>&nbsp;(cmd, argtable)</td>
+	<td class="summary">Fires a command.</td>
 	</tr>
 
 	<tr>
@@ -157,6 +172,42 @@
 
 
 
+<dt><a name="Bot:AddCTCP"></a><strong>Bot:AddCTCP</strong>&nbsp;(cmd, func)</dt>
+<dd>
+Adds a CTCP response
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cmd: The text to match to fire the response (case insensitive)
+	</li>
+	
+	<li>
+	  func: The function to call when the CTCP response is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
+	</li>
+	
+</ul>
+
+
+
+
+<h3>Usage:</h3>
+NewBot:AddCTCP("VERSION", function(Func,Args) Args.Connection:CTCP(Args.Nick,"Luamodo V1 using ".. _VERSION ..", ".. socket._VERSION ..", and ".. lfs._VERSION end)
+
+
+
+<h3>Return value:</h3>
+A TableFunc of the function passed
+
+
+
+</dd>
+
+
+
+
 <dt><a name="Bot:AddCmd"></a><strong>Bot:AddCmd</strong>&nbsp;(cmd, func)</dt>
 <dd>
 Adds a command to the bot
@@ -170,7 +221,7 @@ Adds a command to the bot
 	</li>
 	
 	<li>
-	  func: The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd
+	  func: The function to call when the command is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
 	</li>
 	
 </ul>
@@ -219,7 +270,7 @@ Adds a hook for the specified event
 	</li>
 	
 	<li>
-	  func: The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
+	  func: The function to call when the hook is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
 	</li>
 	
 </ul>
@@ -268,7 +319,7 @@ Creates a connection to an IRC server. connection is stored in the Bot object un
 	</li>
 	
 	<li>
-	  Channels: [optional] A table of channels to join upon successful connection <i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
+	  Channels: [optional] A table of channels to join upon successful connection <br><i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
 	</li>
 	
 	<li>
@@ -287,6 +338,66 @@ NewConnection = NewBot:Connect("irc.testserver.org",6667,{{channel = "#channel1"
 
 <h3>Return value:</h3>
 The newly created connection object
+
+
+
+</dd>
+
+
+
+
+<dt><a name="Bot:DoCTCP"></a><strong>Bot:DoCTCP</strong>&nbsp;(cmd, argtable)</dt>
+<dd>
+Fires a CTCP event. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cmd: The CTCP response to be fired
+	</li>
+	
+	<li>
+	  argtable: A table of arguments to pass to the function
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="Bot:DoCmd"></a><strong>Bot:DoCmd</strong>&nbsp;(cmd, argtable)</dt>
+<dd>
+Fires a command. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  cmd: The command to fire.
+	</li>
+	
+	<li>
+	  argtable: 
+	</li>
+	
+</ul>
+
+
+
+
+
 
 
 
@@ -327,7 +438,7 @@ Fires a list of hooks for the specified event. <br> <i>Note:</i> You do not need
 
 <dt><a name="Bot:DoTimers"></a><strong>Bot:DoTimers</strong>&nbsp;()</dt>
 <dd>
-Loops through each timer checking whether or not they should be executed. <br> <i>Note:</i> You do not need to call this manually, it is take care of automatically
+Loops through each timer checking whether or not they should be executed. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically
 
 
 
@@ -467,7 +578,7 @@ Adds, modifies, removes, or gets info about a timer.
 	
 	<li>NewBot:Timer("test") gets information about the timer
 	
-	<li>NewBot:Timer("test",nil,0) sets the timer to run forever <i>Note</i>: pass nil/omit parameters that you dont want to change
+	<li>NewBot:Timer("test",nil,0) sets the timer to run forever <br><i>Note</i>: pass nil/omit parameters that you dont want to change
 	
 	<li>NewBot:Timer("test", "off") removes the timer
 	

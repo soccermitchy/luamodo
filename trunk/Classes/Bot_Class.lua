@@ -51,7 +51,7 @@ end
 -- @param args a table of arguments to pass to the function
 -- @usage NewBot:Timer("test", 1, 1, print, {"a", "b"}) creates a timer that runs once after one second and prints the strings "a" and "b"
 -- @usage NewBot:Timer("test") gets information about the timer
--- @usage NewBot:Timer("test",nil,0) sets the timer to run forever <i>Note</i>: pass nil/omit parameters that you dont want to change
+-- @usage NewBot:Timer("test",nil,0) sets the timer to run forever <br><i>Note</i>: pass nil/omit parameters that you dont want to change
 -- @usage NewBot:Timer("test", "off") removes the timer
 -- @return False if the name parameter is invalid.<br>
 --  A table representing the timer if requested, or false if said timer doesnt exist.<br>
@@ -100,7 +100,7 @@ function Bot:Timer(name,delay,reps,func,args)
 end
 --- Loops through each timer checking whether or not they should be executed.
 -- <br>
--- <i>Note:</i> You do not need to call this manually, it is take care of automatically
+-- <i>Note:</i> You do not need to call this manually, it is taken care of automatically
 function Bot:DoTimers()
 	local Timers = self.Timers
 	for k,v in pairs(Timers) do
@@ -129,7 +129,7 @@ end
 -- connection is stored in the Bot object under Connections, indexed as a tostring of the connection table
 -- @param Server the IRC server to connect to
 -- @param Port the port to use when connection
--- @param Channels [optional] A table of channels to join upon successful connection <i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
+-- @param Channels [optional] A table of channels to join upon successful connection <br><i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
 -- @param AuthCmd [optional] The string to send to the server to authenticate the bot (such as "ns identify somepassword")
 -- @usage NewConnection = NewBot:Connect("irc.testserver.org",6667,{{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}}, "ns identify somepassword")
 -- @return The newly created connection object
@@ -160,7 +160,7 @@ end
 --- Adds a hook for the specified event
 -- @param event The event to hook onto
 -- @param name The unique name to use for the hook to prevent collisions/allow overwrites
--- @param func The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
+-- @param func The function to call when the hook is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
 -- @usage NewBot:AddHook("PRIVMSG", "TestHook", function(Func, Args) OutputTable(Args) end)
 -- @see TableFunc
 -- @return A TableFunc of the function passed
@@ -178,7 +178,7 @@ function Bot:AddHook(event,name,func)
 end
 --- Adds a command to the bot
 -- @param cmd The text to match to fire the command (case insensitive)
--- @param func The function to call when the hook is fired <i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd
+-- @param func The function to call when the command is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
 -- @usage NewBot:AddCmd("!test", function(Func, Args) print("Test!") end)
 -- @see TableFunc
 -- @return A TableFunc of the function passed
@@ -194,6 +194,11 @@ function Bot:AddCmd(cmd,func)
 		return func
 	end
 end
+--- Fires a command.
+-- <br>
+-- <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+-- @param cmd The command to fire.
+-- @argtable a table of arguments to pass to the function
 function Bot:DoCmd(cmd,argtable)
 	local cmd = string.upper(cmd)
 	if (self.CmdList[cmd]) then
@@ -201,6 +206,11 @@ function Bot:DoCmd(cmd,argtable)
 	end
 	return false
 end
+--- Adds a CTCP response
+-- @param cmd The text to match to fire the response (case insensitive)
+-- @param func The function to call when the CTCP response is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
+-- @usage NewBot:AddCTCP("VERSION", function(Func,Args) Args.Connection:CTCP(Args.Nick,"Luamodo V1 using ".. _VERSION ..", ".. socket._VERSION ..", and ".. lfs._VERSION end)
+-- @return A TableFunc of the function passed
 function Bot:AddCTCP(cmd,func)
 	local cmd = string.upper(cmd)
 	ftype = type(func)
@@ -213,6 +223,11 @@ function Bot:AddCTCP(cmd,func)
 		return func
 	end
 end
+--- Fires a CTCP event.
+-- <br>
+-- <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+-- @param cmd The CTCP response to be fired
+-- @param argtable A table of arguments to pass to the function
 function Bot:DoCTCP(cmd,argtable)
 	local cmd = string.upper(cmd)
 	if (self.CTCPList[cmd]) then
