@@ -159,6 +159,21 @@
 
 
 
+<h2>Tables</h2>
+<table class="table_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot">Bot</a></td>
+	<td class="summary">Bot.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Bot_mt">Bot_mt</a></td>
+	<td class="summary">Bot metatable.</td>
+	</tr>
+
+</table>
+
 
 
 <br/>
@@ -185,7 +200,7 @@ Adds a CTCP response
 	</li>
 	
 	<li>
-	  func: The function to call when the CTCP response is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
+	  func: The function to call when the CTCP response is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
 	</li>
 	
 </ul>
@@ -221,7 +236,7 @@ Adds a command to the bot
 	</li>
 	
 	<li>
-	  func: The function to call when the command is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
+	  func: The function to call when the command is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
 	</li>
 	
 </ul>
@@ -270,7 +285,7 @@ Adds a hook for the specified event
 	</li>
 	
 	<li>
-	  func: The function to call when the hook is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
+	  func: The function to call when the hook is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
 	</li>
 	
 </ul>
@@ -319,7 +334,7 @@ Creates a connection to an IRC server. connection is stored in the Bot object un
 	</li>
 	
 	<li>
-	  Channels: [optional] A table of channels to join upon successful connection <br><i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
+	  Channels: [optional] A table of channels to join upon successful connection <br><i>Note</i>: format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
 	</li>
 	
 	<li>
@@ -348,7 +363,7 @@ The newly created connection object
 
 <dt><a name="Bot:DoCTCP"></a><strong>Bot:DoCTCP</strong>&nbsp;(cmd, argtable)</dt>
 <dd>
-Fires a CTCP event. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+Fires a CTCP event. <br> <i>Note</i>: You do not need to call this manually, it is taken care of automatically.
 
 
 <h3>Parameters</h3>
@@ -378,7 +393,7 @@ Fires a CTCP event. <br> <i>Note:</i> You do not need to call this manually, it 
 
 <dt><a name="Bot:DoCmd"></a><strong>Bot:DoCmd</strong>&nbsp;(cmd, argtable)</dt>
 <dd>
-Fires a command. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+Fires a command. <br> <i>Note</i>: You do not need to call this manually, it is taken care of automatically.
 
 
 <h3>Parameters</h3>
@@ -408,7 +423,7 @@ Fires a command. <br> <i>Note:</i> You do not need to call this manually, it is 
 
 <dt><a name="Bot:DoHook"></a><strong>Bot:DoHook</strong>&nbsp;(event, argtable)</dt>
 <dd>
-Fires a list of hooks for the specified event. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically
+Fires a list of hooks for the specified event. <br> <i>Note</i>: You do not need to call this manually, it is taken care of automatically
 
 
 <h3>Parameters</h3>
@@ -438,7 +453,7 @@ Fires a list of hooks for the specified event. <br> <i>Note:</i> You do not need
 
 <dt><a name="Bot:DoTimers"></a><strong>Bot:DoTimers</strong>&nbsp;()</dt>
 <dd>
-Loops through each timer checking whether or not they should be executed. <br> <i>Note:</i> You do not need to call this manually, it is taken care of automatically
+Loops through each timer checking whether or not they should be executed. <br> <i>Note</i>: You do not need to call this manually, it is taken care of automatically
 
 
 
@@ -604,6 +619,81 @@ Adds, modifies, removes, or gets info about a timer.
 
 
 
+
+<h2><a name="tables"></a>Tables</h2>
+<dl class="table">
+
+<dt><a name="Bot"></a><strong>Bot</strong></dt>
+<dd>Bot. <br> <i>Note</i>: The fields listed below are only available to objects created via Bot:New unless otherwise specified <br>
+
+
+<em>Fields</em>
+<ul>
+	
+	<li>
+	  Extensions: A list of loaded extensions
+	</li>
+	
+	<li>
+	  Timers: A list of timers
+	</li>
+	
+	<li>
+	  CmdList: A list of commands
+	</li>
+	
+	<li>
+	  CTCPList: A list of CTCP responses
+	</li>
+	
+	<li>
+	  HookList: A list of hooks
+	</li>
+	
+	<li>
+	  ID: Display name and index for various tables
+	</li>
+	
+	<li>
+	  Connections: A list of connections
+	</li>
+	
+	<li>
+	  Settings: A table of various settings
+	</li>
+	
+	<li>
+	  Settings.Names: A table of nicks for IRC connections to use
+	</li>
+	
+</ul>
+
+
+</dd>
+
+
+<dt><a name="Bot_mt"></a><strong>Bot_mt</strong></dt>
+<dd>Bot metatable. <br>
+
+
+<em>Fields</em>
+<ul>
+	
+	<li>
+	  __index: Index
+	</li>
+	
+	<li>
+	  __type: Type
+	</li>
+	
+</ul>
+
+
+</dd>
+
+
+</dl>
 
 
 
