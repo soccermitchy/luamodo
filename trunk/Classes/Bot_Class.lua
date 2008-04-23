@@ -1,5 +1,26 @@
+--- Bot.
+-- <br>
+-- <i>Note</i>: The fields listed below are only available to objects created via Bot:New unless otherwise specified
+-- <br>
+-- @class table
+-- @name Bot
+-- @field Extensions A list of loaded extensions
+-- @field Timers A list of timers
+-- @field CmdList A list of commands
+-- @field CTCPList A list of CTCP responses
+-- @field HookList A list of hooks
+-- @field ID Display name and index for various tables
+-- @field Connections A list of connections
+-- @field Settings A table of various settings
+-- @field Settings.Names A table of nicks for IRC connections to use
 Bot = {}
 Bot.Event = {}
+--- Bot metatable.
+-- <br>
+-- @name Bot_mt
+-- @class table
+-- @field __index Index
+-- @field __type Type
 Bot_mt = {}
 Bot_mt.__index = Bot
 Bot_mt.__type = "Bot"
@@ -100,7 +121,7 @@ function Bot:Timer(name,delay,reps,func,args)
 end
 --- Loops through each timer checking whether or not they should be executed.
 -- <br>
--- <i>Note:</i> You do not need to call this manually, it is taken care of automatically
+-- <i>Note</i>: You do not need to call this manually, it is taken care of automatically
 function Bot:DoTimers()
 	local Timers = self.Timers
 	for k,v in pairs(Timers) do
@@ -129,7 +150,7 @@ end
 -- connection is stored in the Bot object under Connections, indexed as a tostring of the connection table
 -- @param Server the IRC server to connect to
 -- @param Port the port to use when connection
--- @param Channels [optional] A table of channels to join upon successful connection <br><i>Note:</i> format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
+-- @param Channels [optional] A table of channels to join upon successful connection <br><i>Note</i>: format for the table is {{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}} where the password key is optional
 -- @param AuthCmd [optional] The string to send to the server to authenticate the bot (such as "ns identify somepassword")
 -- @usage NewConnection = NewBot:Connect("irc.testserver.org",6667,{{channel = "#channel1", password = ""}, {channel = "#channel2", password = "duckhunt"}}, "ns identify somepassword")
 -- @return The newly created connection object
@@ -147,7 +168,7 @@ function Bot:Connect(Server,Port,Channels,AuthCmd)
 end
 --- Fires a list of hooks for the specified event.
 -- <br>
--- <i>Note:</i> You do not need to call this manually, it is taken care of automatically
+-- <i>Note</i>: You do not need to call this manually, it is taken care of automatically
 -- @param event The event to fire hooks for
 -- @param argtable A table of arguments to pass to each function
 function Bot:DoHook(event,argtable)
@@ -160,7 +181,7 @@ end
 --- Adds a hook for the specified event
 -- @param event The event to hook onto
 -- @param name The unique name to use for the hook to prevent collisions/allow overwrites
--- @param func The function to call when the hook is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
+-- @param func The function to call when the hook is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoHook
 -- @usage NewBot:AddHook("PRIVMSG", "TestHook", function(Func, Args) OutputTable(Args) end)
 -- @see TableFunc
 -- @return A TableFunc of the function passed
@@ -178,7 +199,7 @@ function Bot:AddHook(event,name,func)
 end
 --- Adds a command to the bot
 -- @param cmd The text to match to fire the command (case insensitive)
--- @param func The function to call when the command is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
+-- @param func The function to call when the command is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCmd. returng true from the func will cause it to not fire the PRIVMSG event hooks.
 -- @usage NewBot:AddCmd("!test", function(Func, Args) print("Test!") end)
 -- @see TableFunc
 -- @return A TableFunc of the function passed
@@ -196,7 +217,7 @@ function Bot:AddCmd(cmd,func)
 end
 --- Fires a command.
 -- <br>
--- <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+-- <i>Note</i>: You do not need to call this manually, it is taken care of automatically.
 -- @param cmd The command to fire.
 -- @argtable a table of arguments to pass to the function
 function Bot:DoCmd(cmd,argtable)
@@ -208,7 +229,7 @@ function Bot:DoCmd(cmd,argtable)
 end
 --- Adds a CTCP response
 -- @param cmd The text to match to fire the response (case insensitive)
--- @param func The function to call when the CTCP response is fired <br><i>Note:</i> Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
+-- @param func The function to call when the CTCP response is fired <br><i>Note</i>: Functions should have two parameters, Func and Args, Func is the TableFunc version of the function, and Args is the arguments passed to DoCTCP. returng true from the func will cause it to not fire the CTCP event hooks.
 -- @usage NewBot:AddCTCP("VERSION", function(Func,Args) Args.Connection:CTCP(Args.Nick,"Luamodo V1 using ".. _VERSION ..", ".. socket._VERSION ..", and ".. lfs._VERSION end)
 -- @return A TableFunc of the function passed
 function Bot:AddCTCP(cmd,func)
@@ -225,7 +246,7 @@ function Bot:AddCTCP(cmd,func)
 end
 --- Fires a CTCP event.
 -- <br>
--- <i>Note:</i> You do not need to call this manually, it is taken care of automatically.
+-- <i>Note</i>: You do not need to call this manually, it is taken care of automatically.
 -- @param cmd The CTCP response to be fired
 -- @param argtable A table of arguments to pass to the function
 function Bot:DoCTCP(cmd,argtable)

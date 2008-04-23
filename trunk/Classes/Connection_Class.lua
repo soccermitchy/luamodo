@@ -1,7 +1,38 @@
+--- Connection.
+-- <br>
+-- <i>Note</i>: The fields listed below are only available to objects created via Connection:New unless otherwise specified
+-- <br>
+-- @class table
+-- @name Connection
+-- @field Event A list of functions to handle various IRC events, indexed via the event name. Events will not be handled if not present in this table <br><i>Note</i>: Available outside of objects created via Connection:New
+-- @field Format A list of functions to handle the display a various IRC events, indexed via the event name. Events not present in this table will be displayed in their raw format <br><i>Note</i>: Available outside of objects created via Connection:New
+-- @field LastDisplay Last connection to display data, used by Connection:Display <br><i>Note</i>: Available outside of objects created via Connection:New
+-- @field Retries Number of connection retry attempts
+-- @field Server The server to connect to
+-- @field Port The port to use
+-- @field ShouldReconnect Whether it should retry a connection after failure
+-- @field ConnectStatus Status of the connection
+-- @field Timers A list of timers
+-- @field Bot The bot that owns this connection
+-- @field Settings A table of settings
+-- @field Settings.MaxRetries Number of connection retries to attempt before giving up
+-- @field Settings.Timeout Number of seconds to wait for data from the server before deciding the connection has timed out
+-- @field Settings.ChannelQueue A table of channels to join after a successful connection
+-- @field Settings.AltNames A table of possible names
+-- @field Settings.Name The current name used by the connection
+-- @field Settings.NameIndex The index for Settings.AltNames which holds the current name
+-- @field Settings.AuthCmd The command to send to the server to authenticate with services
+-- @field Settings.RetryDelay The number of second to wait between connection retry attempts
 Connection = {}
 Connection.Event = {}
 Connection.Format = {}
 Connection.LastDisplay = nil
+--- Connection metatable.
+-- <br>
+-- @class table
+-- @name Connection_mt
+-- @field __index Index
+-- @field __type Type
 Connection_mt = {}
 Connection_mt.__index = Connection
 Connection_mt.__type = "Connection"

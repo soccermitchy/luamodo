@@ -104,6 +104,21 @@
 
 
 
+<h2>Tables</h2>
+<table class="table_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#Connection">Connection</a></td>
+	<td class="summary">Connection.</td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#Connection_mt">Connection_mt</a></td>
+	<td class="summary">Connection metatable.</td>
+	</tr>
+
+</table>
+
 
 
 <br/>
@@ -153,6 +168,121 @@ Tits.
 
 
 
+
+<h2><a name="tables"></a>Tables</h2>
+<dl class="table">
+
+<dt><a name="Connection"></a><strong>Connection</strong></dt>
+<dd>Connection. <br> <i>Note</i>: The fields listed below are only available to objects created via Connection:New unless otherwise specified <br>
+
+
+<em>Fields</em>
+<ul>
+	
+	<li>
+	  Event: A list of functions to handle various IRC events, indexed via the event name. Events will not be handled if not present in this table <br><i>Note</i>: Available outside of objects created via Connection:New
+	</li>
+	
+	<li>
+	  Format: A list of functions to handle the display a various IRC events, indexed via the event name. Events not present in this table will be displayed in their raw format <br><i>Note</i>: Available outside of objects created via Connection:New
+	</li>
+	
+	<li>
+	  LastDisplay: Last connection to display data, used by Connection:Display <br><i>Note</i>: Available outside of objects created via Connection:New
+	</li>
+	
+	<li>
+	  Retries: Number of connection retry attempts
+	</li>
+	
+	<li>
+	  Server: The server to connect to
+	</li>
+	
+	<li>
+	  Port: The port to use
+	</li>
+	
+	<li>
+	  ShouldReconnect: Whether it should retry a connection after failure
+	</li>
+	
+	<li>
+	  ConnectStatus: Status of the connection
+	</li>
+	
+	<li>
+	  Timers: A list of timers
+	</li>
+	
+	<li>
+	  Bot: The bot that owns this connection
+	</li>
+	
+	<li>
+	  Settings: A table of settings
+	</li>
+	
+	<li>
+	  Settings.MaxRetries: Number of connection retries to attempt before giving up
+	</li>
+	
+	<li>
+	  Settings.Timeout: Number of seconds to wait for data from the server before deciding the connection has timed out
+	</li>
+	
+	<li>
+	  Settings.ChannelQueue: A table of channels to join after a successful connection
+	</li>
+	
+	<li>
+	  Settings.AltNames: A table of possible names
+	</li>
+	
+	<li>
+	  Settings.Name: The current name used by the connection
+	</li>
+	
+	<li>
+	  Settings.NameIndex: The index for Settings.AltNames which holds the current name
+	</li>
+	
+	<li>
+	  Settings.AuthCmd: The command to send to the server to authenticate with services
+	</li>
+	
+	<li>
+	  Settings.RetryDelay: The number of second to wait between connection retry attempts
+	</li>
+	
+</ul>
+
+
+</dd>
+
+
+<dt><a name="Connection_mt"></a><strong>Connection_mt</strong></dt>
+<dd>Connection metatable. <br>
+
+
+<em>Fields</em>
+<ul>
+	
+	<li>
+	  __index: Index
+	</li>
+	
+	<li>
+	  __type: Type
+	</li>
+	
+</ul>
+
+
+</dd>
+
+
+</dl>
 
 
 
