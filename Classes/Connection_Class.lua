@@ -222,6 +222,7 @@ Connection.Event["433"] = function(self)
 		end
 	end
 end
+--- Tits.
 Connection.Event["PRIVMSG"] = function(self,from,text)
 	--self:DisplayTable(text)
 	local Nick, Ident, Host = string.match(from,"(.+)%!(.+)%@(.+)")
