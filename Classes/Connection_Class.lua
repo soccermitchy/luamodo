@@ -24,6 +24,14 @@
 -- @field Settings.AuthCmd The command to send to the server to authenticate with services
 -- @field Settings.RetryDelay The number of second to wait between connection retry attempts
 Connection = {}
+--[[Connection.Prototype = {
+	Server = "localhost",
+	Port = 6667,
+	MaxRetries = 5,
+	Timeout = 420,
+	AuthCmd = "",
+	RetryDelay = 5
+}]]
 Connection.Event = {}
 Connection.Format = {}
 Connection.LastDisplay = nil
